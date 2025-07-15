@@ -1,16 +1,33 @@
 package gift.entity;
 
-public class Member {
-    private Long id;
-    private String email;
-    private String password;
-    private String Role;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
-    public Member(Long id, String email, String password, String Role) {
-        this.id = id;
+@Entity
+@Table(name = "member", uniqueConstraints = @UniqueConstraint(name = "uk_member", columnNames = "email"))
+public class Member {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    protected Member() {
+    }
+
+    public Member(String email, String password) {
         this.email = email;
         this.password = password;
-        this.Role = Role;
     }
 
     public Long getId() {
@@ -19,13 +36,5 @@ public class Member {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getRole() {
-        return Role;
     }
 }
