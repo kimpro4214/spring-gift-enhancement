@@ -5,6 +5,7 @@ import gift.dto.ProductResponseDto;
 import gift.entity.Product;
 import gift.repository.ProductRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -38,13 +39,12 @@ public class ProductService {
         return new ProductResponseDto(savedProduct);
     }
 
+    @Transactional
     public void updateProduct(Long id, ProductRequestDto requestDto) {
-        if (!productRepository.existsById(id)) {
-            throw new NoSuchElementException("Product not found with id: " + id);
-        }
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Product not found with id: " + id));
 
-        Product updatedProduct = new Product(id, requestDto.name(), requestDto.price(), requestDto.imageUrl());
-        productRepository.update(id, updatedProduct);
+        product.update(requestDto.name(), requestDto.imageUrl(), requestDto.price());
     }
 
     public void deleteProduct(Long id) {
@@ -52,6 +52,6 @@ public class ProductService {
             throw new NoSuchElementException("Product not found with id: " + id);
         }
 
-        productRepository.delete(id);
+        productRepository.deleteById(id);
     }
 }

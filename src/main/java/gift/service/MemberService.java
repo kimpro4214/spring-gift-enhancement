@@ -28,7 +28,7 @@ public class MemberService {
         }
 
         String hashedPassword = BCrypt.hashpw(dto.password(), BCrypt.gensalt());
-        Member member = new Member(null, dto.email(), hashedPassword, "USER");
+        Member member = new Member(dto.email(), hashedPassword, "USER");
         memberRepository.save(member);
     }
 

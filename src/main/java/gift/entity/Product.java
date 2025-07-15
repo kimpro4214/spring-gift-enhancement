@@ -1,5 +1,6 @@
 package gift.entity;
 
+import gift.dto.ProductRequestDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,7 +34,29 @@ public class Product {
         this.price = price;
     }
 
+    public static Product from(ProductRequestDto dto) {
+        return new Product(dto.name(), dto.imageUrl(), dto.price());
+    }
+
+    public void update(String name, String imageUrl, Integer price) {
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.price = price;
+    }
+
     public Long getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Integer getPrice() {
+        return price;
     }
 }

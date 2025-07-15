@@ -6,10 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "member", uniqueConstraints = @UniqueConstraint(name = "uk_member", columnNames = "email"))
+@Table(name = "member")
 public class Member {
 
     @Id
@@ -22,12 +21,16 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String role;
+
     protected Member() {
     }
 
-    public Member(String email, String password) {
+    public Member(String email, String password, String role) {
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public Long getId() {
@@ -36,5 +39,13 @@ public class Member {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getRole() {
+        return role;
     }
 }

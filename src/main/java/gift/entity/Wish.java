@@ -1,14 +1,6 @@
 package gift.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.ForeignKey;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "wish")
@@ -19,11 +11,11 @@ public class Wish {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id", nullable = false, foreignKey = @ForeignKey(name = "fk_wish_member_id_ref_member_id"))
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false, foreignKey = @ForeignKey(name = "fk_wish_product_id_ref_product_id"))
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     protected Wish() {
@@ -36,5 +28,13 @@ public class Wish {
 
     public Long getId() {
         return id;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public Product getProduct() {
+        return product;
     }
 }

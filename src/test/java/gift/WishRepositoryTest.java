@@ -8,11 +8,13 @@ import gift.repository.ProductRepository;
 import gift.repository.WishRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class WishRepositoryTest {
 
     @Autowired
@@ -26,7 +28,7 @@ class WishRepositoryTest {
 
     @Test
     void save() {
-        Member member = new Member("wish@example.com", "pw123");
+        Member member = new Member("wish@example.com", "pw123", "USER");
         memberRepository.save(member);
 
         Product product = new Product("mouse", "http://image.com/mouse", 20000);
@@ -36,5 +38,7 @@ class WishRepositoryTest {
         Wish saved = wishRepository.save(wish);
 
         assertThat(saved.getId()).isNotNull();
+        assertThat(saved.getMember().getEmail()).isEqualTo("wish@example.com");
+        assertThat(saved.getProduct().getName()).isEqualTo("mouse");
     }
 }
