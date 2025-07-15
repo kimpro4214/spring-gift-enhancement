@@ -1,16 +1,36 @@
 package gift.entity;
 
-public class Member {
-    private Long id;
-    private String email;
-    private String password;
-    private String Role;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-    public Member(Long id, String email, String password, String Role) {
-        this.id = id;
+@Entity
+@Table(name = "member")
+public class Member {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String role;
+
+    protected Member() {
+    }
+
+    public Member(String email, String password, String role) {
         this.email = email;
         this.password = password;
-        this.Role = Role;
+        this.role = role;
     }
 
     public Long getId() {
@@ -26,6 +46,6 @@ public class Member {
     }
 
     public String getRole() {
-        return Role;
+        return role;
     }
 }
