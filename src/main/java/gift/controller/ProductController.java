@@ -3,12 +3,13 @@ package gift.controller;
 import gift.dto.ProductRequestDto;
 import gift.dto.ProductResponseDto;
 import gift.service.ProductService;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
-import jakarta.validation.Valid;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/api/products")
@@ -27,8 +28,23 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductResponseDto> getProducts() {
-        return productService.getProducts();
+    public ResponseEntity<Page<ProductResponseDto>> getProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id,desc") String[] sort) {
+
+        Sort sortObj = Sort.by(
+                Arrays.stream(sort)
+                        .map(s -> {
+                            String[] parts = s.split(",");
+                            return new Sort.Order(Sort.Direction.fromString(parts[1]), parts[0]);
+                        })
+                        .toList()
+        );
+
+        Pageable pageable = PageRequest.of(page, size, sortObj);
+        Page<ProductResponseDto> productPage = productService.getProductList(pageable);
+        return ResponseEntity.ok(productPage);
     }
 
     @PostMapping
@@ -37,9 +53,9 @@ public class ProductController {
         return ResponseEntity.created(URI.create("/api/products/" + response.getId())).body(response);
     }
 
-
     @PutMapping("/{id}")
-    public ResponseEntity<Void> updateProduct(@PathVariable Long id, @RequestBody ProductRequestDto requestDto) {
+    public ResponseEntity<Void> updateProduct(@PathVariable Long id,
+                                              @RequestBody ProductRequestDto requestDto) {
         productService.updateProduct(id, requestDto);
         return ResponseEntity.ok().build();
     }

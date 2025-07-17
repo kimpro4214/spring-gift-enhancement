@@ -25,24 +25,22 @@ public class AdminProductController {
     @GetMapping
     public String list(@RequestParam(defaultValue = "0") int page,
                        @RequestParam(defaultValue = "10") int size,
-                       @RequestParam(defaultValue = "id,desc") String[] sort,
+                       @RequestParam(defaultValue = "id,desc") String sort,
                        Model model) {
 
-        Sort sortObj = Sort.by(
-                Arrays.stream(sort)
-                        .map(s -> {
-                            String[] parts = s.split(",");
-                            return new Sort.Order(Sort.Direction.fromString(parts[1]), parts[0]);
-                        })
-                        .toList()
-        );
+        String[] parts = sort.split(",");
+        String property = parts[0];
+        String direction = (parts.length > 1) ? parts[1] : "asc";
 
+        Sort sortObj = Sort.by(new Sort.Order(Sort.Direction.fromString(direction), property));
         Pageable pageable = PageRequest.of(page, size, sortObj);
-        Page<ProductResponseDto> productPage = productService.getProductList(pageable);
 
+        Page<ProductResponseDto> productPage = productService.getProductList(pageable);
         model.addAttribute("productPage", productPage);
         return "admin/list";
     }
+
+
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
