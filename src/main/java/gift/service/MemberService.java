@@ -2,6 +2,7 @@ package gift.service;
 
 import gift.auth.JwtProvider;
 import gift.entity.Member;
+import gift.entity.Role;
 import gift.dto.MemberRequestDto;
 import gift.exception.forbidden.EmailDuplicateException;
 import gift.exception.forbidden.EmailNotFoundException;
@@ -28,7 +29,7 @@ public class MemberService {
         }
 
         String hashedPassword = BCrypt.hashpw(dto.password(), BCrypt.gensalt());
-        Member member = new Member(dto.email(), hashedPassword, "USER");
+        Member member = new Member(dto.email(), hashedPassword, Role.USER.name());
         memberRepository.save(member);
     }
 
