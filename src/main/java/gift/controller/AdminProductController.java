@@ -1,20 +1,16 @@
 package gift.controller;
 
-import gift.service.ProductService;
 import gift.dto.ProductRequestDto;
 import gift.dto.ProductResponseDto;
+import gift.service.ProductService;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
-
-import java.util.List;
+import java.util.Arrays;
 
 @Controller
 @RequestMapping("/admin/products")
@@ -27,11 +23,24 @@ public class AdminProductController {
     }
 
     @GetMapping
-    public String list(Model model) {
-        List<ProductResponseDto> products = productService.getProducts();
-        model.addAttribute("products", products);
+    public String list(@RequestParam(defaultValue = "0") int page,
+                       @RequestParam(defaultValue = "10") int size,
+                       @RequestParam(defaultValue = "id,desc") String sort,
+                       Model model) {
+
+        String[] parts = sort.split(",");
+        String property = parts[0];
+        String direction = (parts.length > 1) ? parts[1] : "asc";
+
+        Sort sortObj = Sort.by(new Sort.Order(Sort.Direction.fromString(direction), property));
+        Pageable pageable = PageRequest.of(page, size, sortObj);
+
+        Page<ProductResponseDto> productPage = productService.getProductList(pageable);
+        model.addAttribute("productPage", productPage);
         return "admin/list";
     }
+
+
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
@@ -39,7 +48,7 @@ public class AdminProductController {
         return "admin/new";
     }
 
-    @PostMapping("")
+    @PostMapping
     public String createProduct(@Valid @ModelAttribute ProductRequestDto requestDto,
                                 BindingResult bindingResult,
                                 Model model) {
@@ -50,7 +59,6 @@ public class AdminProductController {
         productService.addProduct(requestDto);
         return "redirect:/admin/products";
     }
-
 
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model) {
@@ -71,7 +79,4 @@ public class AdminProductController {
         productService.deleteProduct(id);
         return "redirect:/admin/products";
     }
-
-
-
 }

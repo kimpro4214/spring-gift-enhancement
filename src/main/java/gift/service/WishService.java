@@ -7,12 +7,12 @@ import gift.entity.Wish;
 import gift.repository.MemberRepository;
 import gift.repository.ProductRepository;
 import gift.repository.WishRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 public class WishService {
@@ -42,13 +42,11 @@ public class WishService {
     }
 
     @Transactional(readOnly = true)
-    public List<WishResponseDto> getWishes(Long memberId) {
+    public Page<WishResponseDto> getWishes(Long memberId, Pageable pageable) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new NoSuchElementException("Member not found with id: " + memberId));
 
-        List<Wish> wishes = wishRepository.findAllByMember(member);
-        return wishes.stream()
-                .map(WishResponseDto::new)
-                .collect(Collectors.toList());
+        return wishRepository.findAllByMember(member, pageable)
+                .map(WishResponseDto::new);
     }
 }
