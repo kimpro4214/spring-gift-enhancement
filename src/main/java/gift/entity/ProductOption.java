@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 @Table(name = "product_option")
 public class ProductOption {
 
+    private static final int MAX_NAME_LENGTH = 50;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,7 +34,6 @@ public class ProductOption {
         this.product = product;
     }
 
-
     public void subtract(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("차감 수량은 1 이상이어야 합니다.");
@@ -51,8 +52,8 @@ public class ProductOption {
     }
 
     private void validateName() {
-        if (name.length() > 50) {
-            throw new IllegalArgumentException("옵션 이름은 최대 50자까지 가능합니다.");
+        if (name.length() > MAX_NAME_LENGTH) {
+            throw new IllegalArgumentException("옵션 이름은 최대 " + MAX_NAME_LENGTH + "자까지 가능합니다.");
         }
         if (!name.matches("^[\\w\\s\\(\\)\\[\\]\\+\\-\\&\\/_]+$")) {
             throw new IllegalArgumentException("허용되지 않은 특수 문자가 포함되어 있습니다.");
