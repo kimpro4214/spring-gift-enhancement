@@ -1,12 +1,9 @@
 package gift.entity;
 
-import gift.dto.ProductRequestDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -25,6 +22,9 @@ public class Product {
     @Column(nullable = false)
     private Integer price;
 
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductOption> options = new ArrayList<>();
+
     protected Product() {
     }
 
@@ -34,7 +34,7 @@ public class Product {
         this.price = price;
     }
 
-    public static Product from(ProductRequestDto dto) {
+    public static Product from(gift.dto.ProductRequestDto dto) {
         return new Product(dto.name(), dto.imageUrl(), dto.price());
     }
 
@@ -44,19 +44,34 @@ public class Product {
         this.price = price;
     }
 
-    public Long getId() {
+    public void addOption(ProductOption option) {
+        this.options.add(option);
+        option.assignTo(this);
+    }
+
+    public void validateHasAtLeastOneOption() {
+        if (options == null || options.isEmpty()) {
+            throw new IllegalStateException("상품에는 하나 이상의 옵션이 있어야 합니다.");
+        }
+    }
+
+    public Long id() {
         return id;
     }
 
-    public String getName() {
+    public String name() {
         return name;
     }
 
-    public String getImageUrl() {
+    public String imageUrl() {
         return imageUrl;
     }
 
-    public Integer getPrice() {
+    public Integer price() {
         return price;
+    }
+
+    public List<ProductOption> options() {
+        return List.copyOf(options);
     }
 }
