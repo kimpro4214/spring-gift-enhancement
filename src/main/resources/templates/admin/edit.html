@@ -30,7 +30,7 @@
 
 <h2>옵션 목록</h2>
 <ul>
-    <li th:each="opt : ${product.options()}">
+    <li th:each="opt : ${product.options}">
         <span th:text="${opt.name()}">옵션 이름</span> /
         <span th:text="${opt.quantity()}">수량</span>
     </li>

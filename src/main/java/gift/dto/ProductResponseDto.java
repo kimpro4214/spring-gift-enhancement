@@ -2,20 +2,25 @@ package gift.dto;
 
 import gift.entity.Product;
 
+import java.util.List;
+
 public class ProductResponseDto {
 
     private Long id;
     private String name;
     private int price;
     private String imageUrl;
+    private List<ProductOptionResponseDto> options;
 
     public ProductResponseDto(Product product) {
         this.id = product.id();
         this.name = product.name();
         this.price = product.price();
         this.imageUrl = product.imageUrl();
+        this.options = product.options().stream()
+                .map(ProductOptionResponseDto::from)
+                .toList();
     }
-
 
     public Long getId() {
         return id;
@@ -31,5 +36,9 @@ public class ProductResponseDto {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public List<ProductOptionResponseDto> getOptions() {
+        return options;
     }
 }
