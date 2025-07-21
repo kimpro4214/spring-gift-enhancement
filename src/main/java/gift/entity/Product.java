@@ -1,5 +1,6 @@
 package gift.entity;
 
+import gift.dto.ProductRequestDto;
 import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Product {
         this.price = price;
     }
 
-    public static Product from(gift.dto.ProductRequestDto dto) {
+    public static Product from(ProductRequestDto dto) {
         return new Product(dto.name(), dto.imageUrl(), dto.price());
     }
 
