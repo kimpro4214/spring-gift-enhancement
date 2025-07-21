@@ -45,8 +45,18 @@ public class Product {
     }
 
     public void addOption(ProductOption option) {
+        ensureUniqueOptionName(option.name());
         this.options.add(option);
         option.assignTo(this);
+    }
+
+    private void ensureUniqueOptionName(String newOptionName) {
+        boolean hasDuplicate = this.options.stream()
+                .anyMatch(option -> option.name().equals(newOptionName));
+
+        if (hasDuplicate) {
+            throw new IllegalArgumentException("동일한 옵션 이름이 이미 존재합니다: " + newOptionName);
+        }
     }
 
     public void validateHasAtLeastOneOption() {
