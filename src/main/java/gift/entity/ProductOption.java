@@ -27,7 +27,7 @@ public class ProductOption {
         this.quantity = quantity;
     }
 
-    
+
     public void assignTo(Product product) {
         this.product = product;
     }
@@ -38,7 +38,9 @@ public class ProductOption {
             throw new IllegalArgumentException("차감 수량은 1 이상이어야 합니다.");
         }
         if (quantity < amount) {
-            throw new IllegalArgumentException("재고가 부족합니다.");
+            throw new IllegalArgumentException(
+                    String.format("재고가 부족합니다. (요청 수량: %d, 현재 수량: %d)", amount, quantity)
+            );
         }
         this.quantity -= amount;
     }
