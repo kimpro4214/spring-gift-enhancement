@@ -69,7 +69,7 @@ class ProductOptionTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("재고가 부족");
     }
-    
+
     @Test
     void 옵션_이름이_중복되면_예외가_발생한다() {
         Product product = new Product("상품", "이미지", 10000);
