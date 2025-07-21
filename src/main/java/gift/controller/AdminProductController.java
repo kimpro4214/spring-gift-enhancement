@@ -31,9 +31,6 @@ public class AdminProductController {
         return "admin/list";
     }
 
-
-
-
     @GetMapping("/new")
     public String showCreateForm(Model model) {
         model.addAttribute("productRequestDto", new ProductRequestDto("", 1, ""));
@@ -50,6 +47,14 @@ public class AdminProductController {
         }
         productService.addProduct(requestDto);
         return "redirect:/admin/products";
+    }
+
+    @PostMapping("/{id}/options")
+    public String addOption(@PathVariable Long id,
+                            @RequestParam String name,
+                            @RequestParam int quantity) {
+        productService.addOptionToProduct(id, name, quantity);
+        return "redirect:/admin/products/" + id + "/edit";
     }
 
     @GetMapping("/{id}/edit")

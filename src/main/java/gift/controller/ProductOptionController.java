@@ -1,5 +1,6 @@
 package gift.controller;
 
+import gift.dto.ProductOptionRequestDto;
 import gift.dto.ProductOptionResponseDto;
 import gift.service.ProductOptionService;
 import org.springframework.web.bind.annotation.*;
@@ -19,5 +20,12 @@ public class ProductOptionController {
     @GetMapping("/{productId}/options")
     public List<ProductOptionResponseDto> getProductOptions(@PathVariable Long productId) {
         return productOptionService.getOptionsByProductId(productId);
+    }
+
+    @PostMapping("/{productId}/options")
+    public String addOption(@PathVariable Long productId,
+                            @ModelAttribute ProductOptionRequestDto requestDto) {
+        productOptionService.addOptionToProduct(productId, requestDto);
+        return "redirect:/admin/products/" + productId;
     }
 }

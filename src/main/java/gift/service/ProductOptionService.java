@@ -1,5 +1,6 @@
 package gift.service;
 
+import gift.dto.ProductOptionRequestDto;
 import gift.dto.ProductOptionResponseDto;
 import gift.entity.Product;
 import gift.entity.ProductOption;
@@ -38,5 +39,15 @@ public class ProductOptionService {
                 .orElseThrow(() -> new IllegalArgumentException("옵션을 찾을 수 없습니다."));
 
         option.subtract(quantityToSubtract);
+    }
+
+    @Transactional
+    public void addOptionToProduct(Long productId, ProductOptionRequestDto requestDto) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다."));
+
+        ProductOption option = new ProductOption(requestDto.name(), requestDto.quantity());
+        option.validate();
+        product.addOption(option);
     }
 }
