@@ -25,11 +25,18 @@ public class AdminProductController {
 
     @GetMapping
     public String list(@PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                       @RequestParam(required = false) String sort,
                        Model model) {
-        Page<ProductResponseDto> productPage = productService.getProductList(pageable);
+        Pageable safePageable = pageable;
+        if ("null".equals(sort)) {
+            safePageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by("id").descending());
+        }
+
+        Page<ProductResponseDto> productPage = productService.getProductList(safePageable);
         model.addAttribute("productPage", productPage);
         return "admin/list";
     }
+
 
     @GetMapping("/new")
     public String showCreateForm(Model model) {
