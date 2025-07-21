@@ -22,12 +22,12 @@ public class Member {
     private String password;
 
     @Column(nullable = false)
-    private String role;
+    private Role role;
 
     protected Member() {
     }
 
-    public Member(String email, String password, String role) {
+    public Member(String email, String password, Role role) {
         this.email = email;
         this.password = password;
         this.role = role;
@@ -45,7 +45,7 @@ public class Member {
         return password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 }
