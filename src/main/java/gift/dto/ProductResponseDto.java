@@ -10,11 +10,12 @@ public class ProductResponseDto {
     private String imageUrl;
 
     public ProductResponseDto(Product product) {
-        this.id = product.getId();
-        this.name = product.getName();
-        this.price = product.getPrice();
-        this.imageUrl = product.getImageUrl();
+        this.id = product.id();
+        this.name = product.name();
+        this.price = product.price();
+        this.imageUrl = product.imageUrl();
     }
+
 
     public Long getId() {
         return id;

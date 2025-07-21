@@ -49,8 +49,8 @@ public class ProductOption {
     }
 
     public void validate() {
-        validateName();
         validateQuantity();
+        validateName();
     }
 
     private void validateName() {

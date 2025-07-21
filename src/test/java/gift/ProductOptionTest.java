@@ -2,8 +2,8 @@ package gift.entity;
 
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ProductOptionTest {
 
@@ -32,7 +32,16 @@ class ProductOptionTest {
 
         assertThatThrownBy(option::validate)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("1 이상");
+                .hasMessageContaining("1 이상 1억 미만");
+    }
+
+    @Test
+    void 수량이_1억_이상이면_예외가_발생한다() {
+        ProductOption option = new ProductOption("정상", 100_000_000);
+
+        assertThatThrownBy(option::validate)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("1 이상 1억 미만");
     }
 
     @Test
@@ -49,7 +58,7 @@ class ProductOptionTest {
 
         assertThatThrownBy(() -> option.subtract(0))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("1 이상");
+                .hasMessageContaining("차감 수량은 1 이상");
     }
 
     @Test
