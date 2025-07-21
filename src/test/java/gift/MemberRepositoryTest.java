@@ -29,7 +29,7 @@ class MemberRepositoryTest {
         assertAll(
                 () -> assertThat(saved.getId()).isNotNull(),
                 () -> assertThat(saved.getEmail()).isEqualTo("test@example.com"),
-                () -> assertThat(saved.getRole()).isEqualTo("USER")
+                () -> assertThat(saved.getRole()).isEqualTo(Role.USER)
         );
     }
 
@@ -44,7 +44,7 @@ class MemberRepositoryTest {
 
         assertAll(
                 () -> assertThat(found.getEmail()).isEqualTo("find@example.com"),
-                () -> assertThat(found.getRole()).isEqualTo("USER")
+                () -> assertThat(found.getRole()).isEqualTo(Role.USER) 
         );
     }
 }
