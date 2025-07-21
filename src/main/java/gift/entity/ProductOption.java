@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 public class ProductOption {
 
     private static final int MAX_NAME_LENGTH = 50;
+    private static final int MIN_QUANTITY = 1;
+    private static final int MAX_QUANTITY = 100_000_000;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,8 +63,9 @@ public class ProductOption {
     }
 
     private void validateQuantity() {
-        if (quantity < 1 || quantity >= 100_000_000) {
-            throw new IllegalArgumentException("옵션 수량은 1 이상 1억 미만이어야 합니다.");
+        if (quantity < MIN_QUANTITY || quantity >= MAX_QUANTITY) {
+            throw new IllegalArgumentException(
+                    String.format("옵션 수량은 %d 이상 %d 미만이어야 합니다.", MIN_QUANTITY, MAX_QUANTITY));
         }
     }
 
