@@ -47,7 +47,7 @@ public class ProductOption {
         }
         this.quantity -= amount;
     }
-    
+
     public void validate() {
         validateName();
         validateQuantity();
