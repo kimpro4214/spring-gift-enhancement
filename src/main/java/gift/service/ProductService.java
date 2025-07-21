@@ -35,6 +35,7 @@ public class ProductService {
 
     public ProductResponseDto addProduct(ProductRequestDto requestDto) {
         Product product = Product.from(requestDto);
+        product.validateHasAtLeastOneOption();
         Product savedProduct = productRepository.save(product);
         return new ProductResponseDto(savedProduct);
     }
