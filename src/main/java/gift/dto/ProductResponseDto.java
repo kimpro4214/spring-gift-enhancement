@@ -13,10 +13,10 @@ public class ProductResponseDto {
     private List<ProductOptionResponseDto> options;
 
     public ProductResponseDto(Product product) {
-        this.id = product.id();
-        this.name = product.name();
-        this.price = product.price();
-        this.imageUrl = product.imageUrl();
+        this.id = product.getId();
+        this.name = product.getName();
+        this.price = product.getPrice();
+        this.imageUrl = product.getImageUrl();
         this.options = product.options().stream()
                 .map(ProductOptionResponseDto::from)
                 .toList();

@@ -12,9 +12,9 @@ public class WishResponseDto {
 
     public WishResponseDto(Wish wish) {
         this.wishId = wish.getId();
-        this.productId = wish.getProduct().id();
-        this.productName = wish.getProduct().name();
-        this.productImageUrl = wish.getProduct().imageUrl();
+        this.productId = wish.getProduct().getId();
+        this.productName = wish.getProduct().getName();
+        this.productImageUrl = wish.getProduct().getImageUrl();
         this.createdAt = wish.getCreatedAt().toString();
     }
 

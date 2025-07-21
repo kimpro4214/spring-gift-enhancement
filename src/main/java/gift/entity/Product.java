@@ -56,19 +56,19 @@ public class Product {
     }
 
 
-    public Long id() {
+    public Long getId() {
         return id;
     }
 
-    public String name() {
+    public String getName() {
         return name;
     }
 
-    public String imageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public Integer price() {
+    public Integer getPrice() {
         return price;
     }
 
