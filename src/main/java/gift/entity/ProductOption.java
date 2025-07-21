@@ -27,17 +27,12 @@ public class ProductOption {
         this.quantity = quantity;
     }
 
-    /**
-     * 옵션을 특정 상품에 귀속시킨다.
-     */
+    
     public void assignTo(Product product) {
         this.product = product;
     }
 
-    /**
-     * 옵션의 재고 수량을 차감한다.
-     * @param amount 차감할 수량
-     */
+
     public void subtract(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("차감 수량은 1 이상이어야 합니다.");
