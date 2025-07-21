@@ -69,4 +69,17 @@ class ProductOptionTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("재고가 부족");
     }
+    
+    @Test
+    void 옵션_이름이_중복되면_예외가_발생한다() {
+        Product product = new Product("상품", "이미지", 10000);
+        ProductOption option1 = new ProductOption("01. 시어버터", 100);
+        ProductOption option2 = new ProductOption("01. 시어버터", 50); // 같은 이름
+
+        product.addOption(option1);
+
+        assertThatThrownBy(() -> product.addOption(option2))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("이미 존재");
+    }
 }
