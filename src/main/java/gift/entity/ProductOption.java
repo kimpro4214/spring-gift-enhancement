@@ -69,19 +69,19 @@ public class ProductOption {
         }
     }
 
-    public Long id() {
+    public Long getId() {
         return id;
     }
 
-    public String name() {
+    public String getName() {
         return name;
     }
 
-    public int quantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public Product product() {
+    public Product getProduct() {
         return product;
     }
 }

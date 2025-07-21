@@ -46,7 +46,7 @@ public class Product {
 
     public void addOption(ProductOption option) {
         boolean duplicated = options.stream()
-                .anyMatch(existing -> existing.name().equals(option.name()));
+                .anyMatch(existing -> existing.getName().equals(option.getName()));
         if (duplicated) {
             throw new IllegalArgumentException("동일한 이름의 옵션이 이미 존재합니다.");
         }
@@ -55,11 +55,6 @@ public class Product {
         option.assignTo(this);
     }
 
-    public void validateHasAtLeastOneOption() {
-        if (options == null || options.isEmpty()) {
-            throw new IllegalStateException("상품에는 하나 이상의 옵션이 있어야 합니다.");
-        }
-    }
 
     public Long id() {
         return id;

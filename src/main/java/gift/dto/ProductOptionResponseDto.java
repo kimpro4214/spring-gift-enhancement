@@ -7,9 +7,9 @@ public record ProductOptionResponseDto(
 ) {
     public static ProductOptionResponseDto from(gift.entity.ProductOption option) {
         return new ProductOptionResponseDto(
-                option.id(),
-                option.name(),
-                option.quantity()
+                option.getId(),
+                option.getName(),
+                option.getQuantity()
         );
     }
 }
