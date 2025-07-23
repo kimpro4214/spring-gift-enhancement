@@ -44,7 +44,6 @@ public class ProductService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("상품을 찾을 수 없습니다."));
         ProductOption option = new ProductOption(name, quantity);
-        option.validate();
         product.addOption(option);
     }
 

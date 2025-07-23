@@ -28,8 +28,18 @@ public class ProductOption {
     }
 
     public ProductOption(String name, int quantity) {
+        validate(name, quantity);
         this.name = name;
         this.quantity = quantity;
+    }
+
+    private void validate(String name, int quantity) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("옵션 이름은 비어 있을 수 없습니다.");
+        }
+        if (quantity < 0) {
+            throw new IllegalArgumentException("옵션 수량은 0 이상이어야 합니다.");
+        }
     }
 
 
