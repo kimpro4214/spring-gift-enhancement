@@ -40,6 +40,6 @@ class WishRepositoryTest {
 
         assertThat(saved.getId()).isNotNull();
         assertThat(saved.getMember().getEmail()).isEqualTo("wish@example.com");
-        assertThat(saved.getProduct().name()).isEqualTo("mouse");
+        assertThat(saved.getProduct().getName()).isEqualTo("mouse");
     }
 }

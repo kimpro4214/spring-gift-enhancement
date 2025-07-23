@@ -20,7 +20,7 @@ class ProductRepositoryTest {
     void save() {
         Product product = new Product("keyboard", "http://image.com/keyboard", 15000);
         Product saved = productRepository.save(product);
-        assertThat(saved.id()).isNotNull();
-        assertThat(saved.name()).isEqualTo("keyboard");
+        assertThat(saved.getId()).isNotNull();
+        assertThat(saved.getName()).isEqualTo("keyboard");
     }
 }

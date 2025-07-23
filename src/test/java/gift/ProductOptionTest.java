@@ -49,7 +49,7 @@ class ProductOptionTest {
         ProductOption option = new ProductOption("정상", 10);
         option.subtract(3);
 
-        assertThat(option.quantity()).isEqualTo(7);
+        assertThat(option.getQuantity()).isEqualTo(7);
     }
 
     @Test
