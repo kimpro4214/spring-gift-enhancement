@@ -2,6 +2,7 @@ package gift.dto;
 
 import gift.entity.Product;
 
+import java.util.Collections;
 import java.util.List;
 
 public class ProductResponseDto {
@@ -39,6 +40,6 @@ public class ProductResponseDto {
     }
 
     public List<ProductOptionResponseDto> getOptions() {
-        return options;
+        return Collections.unmodifiableList(options);
     }
 }
